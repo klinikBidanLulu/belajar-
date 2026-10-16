@@ -38,8 +38,8 @@
     </a>
   </main>
   
-
-<section id="sectionForm" class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg my-12">
+<!-- BAGIAN FORMULIR (Awalnya disembunyikan pakai kelas "hidden") -->
+<section id="sectionForm" class="hidden max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg my-12">
   <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Daftar Janji Temu</h2>
   
   <form id="formJanji" class="space-y-4">
@@ -63,39 +63,47 @@
   </form>
 </section>
 
-
+<!-- BAGIAN PESAN SUKSES (Awalnya juga disembunyikan) -->
 <section id="sectionSukses" class="hidden max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg my-12 text-center">
   <div class="text-green-500 text-5xl mb-4">✔️</div>
   <h2 class="text-2xl font-bold text-slate-900 mb-2">Pendaftaran Berhasil!</h2>
-  <p class="text-slate-600 mb-6">Terima kasih, <span id="namaSpan" class="font-semibold text-slate-800"></span>! Janji temu Anda telah dicatat oleh sistem kami.</p>
+  <p class="text-slate-600 mb-6">Terima kasih, <span id="namaSpan" class="font-semibold text-slate-800"></span>! Janji temu Anda telah dicatat.</p>
   
   <button onclick="location.reload()" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition">
-    Buat Janji Lagi
+    Selesai
   </button>
 </section>
 
   <script>
-  const form = document.getElementById('formJanji');
+  // Tangkap elemen-elemen yang dibutuhkan
+  const btnJanji = document.getElementById('btnJanji');
   const sectionForm = document.getElementById('sectionForm');
+  const formJanji = document.getElementById('formJanji');
   const sectionSukses = document.getElementById('sectionSukses');
   const namaSpan = document.getElementById('namaSpan');
 
-  form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Mencegah reload halaman
+  // 1. Saat tombol "Buat Janji Temu" di atas diklik
+  btnJanji.addEventListener('click', function(event) {
+    event.preventDefault();
+    // Munculkan form dengan menghapus kelas "hidden"
+    sectionForm.classList.remove('hidden');
+    
+    // Otomatis geser layar ke arah form
+    sectionForm.scrollIntoView({ behavior: 'smooth' });
+  });
 
-    // Ambil nama yang diketik user
+  // 2. Saat form diisi lalu tombol kirim ditekan
+  formJanji.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
     const nama = document.getElementById('inputNama').value;
-
-    // Masukkan nama ke dalam teks sukses
     namaSpan.innerText = nama;
 
-    // Sembunyikan form pendaftaran
+    // Sembunyikan form, lalu tampilkan kotak sukses
     sectionForm.classList.add('hidden');
-
-    // Tampilkan kotak sukses (buang kelas "hidden")
     sectionSukses.classList.remove('hidden');
   });
 </script>
-  
+
 </body>
 </html>
